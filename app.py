@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import datetime
 import pdfkit
 import os 
+import pytz
 app = Flask(__name__)
 
 # account login credentials
@@ -128,7 +129,7 @@ def deleteBill():
 @app.route("/createbill", methods=["GET", "POST"])
 def createbill():
     if request.method == "POST":
-        dateTime = datetime.datetime.now()
+        dateTime = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
         # dateTime = dateTime.strftime("%d, %a, %y, %I, %M, %S, %p")
         print(dateTime)
         customerPhone = request.form.get("createBillNumber")
@@ -209,7 +210,7 @@ def payAmount():
 
         bill = List_of_bills.query.filter_by(sno=payingBillSno).first()
         bill.payed_amount = bill.payed_amount + int(currentPayment)
-        bill.date_time  = datetime.datetime.now()
+        bill.date_time  = datetime.datetime.now(pytz.timezone("Asia/Koltata"))
         db.session.commit()
         return redirect("/billingpage")
     return render_template("page not found.html")
