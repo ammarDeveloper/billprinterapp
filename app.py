@@ -129,9 +129,7 @@ def deleteBill():
 @app.route("/createbill", methods=["GET", "POST"])
 def createbill():
     if request.method == "POST":
-        utcTime = datetime.datetime.now(datetime.timezone.utc)
-        IND = timezone("Asia/Kolkata")
-        dateTime = utcTime.astimezone(IND)
+        dateTime = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
         # dateTime = dateTime.strftime("%d, %a, %y, %I, %M, %S, %p")
         print(dateTime)
         customerPhone = request.form.get("createBillNumber")
@@ -212,9 +210,7 @@ def payAmount():
 
         bill = List_of_bills.query.filter_by(sno=payingBillSno).first()
         bill.payed_amount = bill.payed_amount + int(currentPayment)
-        utcTime = datetime.datetime.now(datetime.timezone.utc)
-        IND = timezone("Asia/Kolkata")
-        bill.date_time  = utcTime.astimezone(IND)
+        bill.date_time  = datetime.datetime.now() + datetime.timedelta(hours=5, minutes=30)
         db.session.commit()
         return redirect("/billingpage")
     return render_template("page not found.html")
