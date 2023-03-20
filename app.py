@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # account login credentials
-accountLoginCredentials = {"loginUserName" : "Mohammed Ammar", "loginUserPassword" : "Qwertyuiop@123", "alreadyLoggedIn" : False, "currentUserBills":"", "currentBillNo": ""}
+accountLoginCredentials = {"loginUserName" : "Laundry Room", "loginUserPassword" : "LaundryRoom@123", "alreadyLoggedIn" : False, "currentUserBills":"", "currentBillNo": ""}
 
 # database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL") # "mysql://root:@localhost/billprinter"
@@ -43,7 +43,7 @@ def login():
     if request.method == "POST":
         userName = request.form.get("username")
         userPassword = request.form.get("password")
-        if userName != accountLoginCredentials["loginUserName"] or userPassword != accountLoginCredentials["loginUserPassword"]:
+        if userName.lower() != accountLoginCredentials["loginUserName"].lower() or userPassword != accountLoginCredentials["loginUserPassword"]:
             return redirect("/")
         accountLoginCredentials["alreadyLoggedIn"] = True
         return redirect("/dashboard")
