@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>List of bills</title>
+</head>
+
+<style>
+    .search-bar {
+        width: 100%;
+    }
+
+    .grid-layout{
+        display: grid;
+        grid-template-columns: 1fr 4fr 4fr 1fr;
+        grid-gap: 10px;
+    }
+
+    .grid-form{
+        display: grid;
+        grid-template-columns: 9fr 1fr;
+        grid-gap: 10px;
+    }
+
+    .na{
+        padding: 10px 15px;
+        background-color: #5e6a7b;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        color: white;
+    }
+
+    .na a{
+        color: white !important;
+    }
+
+    .btn{
+        border: 1px solid black;
+        border-radius: 10px;
+    }
+
+    .btn:hover{
+        box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px;
+        transform: translateY(-2px);
+    }
+
+    body{
+        background: #d4f4ff;
+    }
+
+    .list-of-customers{
+        margin-top: 20vh;
+    }
+
+    .customer{
+        display: grid;
+        grid-template-columns: 3fr 3fr 2fr 1fr 1fr;
+        padding: 10px;
+        background-color: white;
+        margin: 10px 20px;
+        border: 1px solid black;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .customer h5{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 0;
+    }
+
+    p{
+        margin-bottom: 0;
+    }
+
+    .customer form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .encloser-msg{
+        display: inline-block;
+        background-color: green;        
+        padding: 2px 10px;
+        border-radius: 50px;
+        color: white;
+    }
+
+    .encloser-msg-red{
+        background-color: red;
+    }
+
+    .encloser{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .encloser-msg-grey{
+        background-color: gray;
+    }
+
+
+
+
+</style>
+
+<body>
+    <nav class="na">
+        <div class="grid-layout">
+            <a class="btn btn-success" href="/dashboard">Back</a>
+            <h5>Customer name: {{openCustomerName}}</h5>
+            <h5>Phone: {{openCustomerNumber}}</h5>
+            <form action="createbill" method="post">
+                <input type="hidden" name="createBillNumber" value="{{openCustomerNumber}}">
+                <button class="btn btn-success" type="submit">Create Bill</button>
+            </form>
+            
+        </div>
+    </nav>
+    
+    <div class="list-of-customers">
+        {% for bill in listOfBills %}
+        <div class="customer">
+            <h5>Bill No: GL{{bill.sno}}</h5>
+            <h5>{{bill.date_time}}</h5>
+            <div class="encloser">
+                {% if bill.total_amount == 0 %}
+                    <p class="encloser-msg encloser-msg-grey">No transactions</p>
+                {% elif bill.total_amount - bill.payed_amount == 0 %}
+                    <p class="encloser-msg">Payment Done</p>
+                {% else %}
+                    <p class="encloser-msg encloser-msg-red">Pending</p>
+                {% endif %}
+            </div>
+            <form action="/openbill"  method="post"><input type="hidden" value="{{bill.sno}}" name="openBillSno"><button class="btn btn-primary" type="submit">Open</button></form>
+            <form action="/deletebill" method="post"><input type="hidden" value="{{bill.sno}}" name="deleteBillSno"><button class="btn btn-danger" type="submit">Delete</button></form>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='scripts/resubmissionPrevention.js')}}"></script>
+
+</html>

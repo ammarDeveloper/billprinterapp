@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Press+Start+2P&family=Ubuntu:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Bill</title>
+</head>
+<style>
+    * {
+        font-family: 'Indie Flower', cursive;
+        font-family: 'Press Start 2P', cursive;
+        font-family: 'Ubuntu', sans-serif;
+
+    }
+
+
+    .super-container {
+        min-height: 60vh;
+        border: 1px solid black;
+        margin: 10px;
+    }
+
+    .company-info {
+        border-bottom: 1px solid black;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .company-info h4,
+    p {
+        margin: 5px;
+        font-size: 0.8rem;
+
+    }
+
+    .company-info img {
+        height: 70px;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .customer-info {
+        display: grid;
+        grid-template-columns: 2fr 4fr 4fr;
+        border-bottom: 1px solid black;
+        padding: 10px;
+    }
+
+    .customer-info h2,
+    h6,
+    h5 {
+        margin: auto 0;
+    }
+
+    .totalpayment-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        border-bottom: 1px solid black;
+        padding: 10px;
+    }
+
+
+    .totalpayment-info p {
+        margin: auto;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        padding: 10px !important;
+        /* position: relative; */
+    }
+
+    table th {
+        text-align: start;
+        padding-bottom: 10px !important;
+    }
+
+    table td {
+        padding-bottom: 10px;
+    }
+
+
+
+    .amount-align {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+
+    form {
+        /* position: relative; */
+    }
+
+    .btn {
+        padding: 7px 12px;
+        background-color: green;
+        outline: none;
+        border: 1px solid black;
+        border-radius: 5px;
+        color: white;
+
+    }
+
+    .btn:hover {
+        box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px;
+        transform: translateY(-2px);
+    }
+
+    .super-container {
+        position: relative;
+    }
+
+    .btn-red {
+        background-color: red;
+    }
+
+    .terms-conditions {
+        border-top: 1px solid black;
+        display: grid;
+        grid-template-columns: 6fr 4fr;
+        margin-top: 40px;
+    }
+
+
+
+    .subtotal-section {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .subtotal-section h5 {
+        margin: 5px 0px;
+    }
+
+
+    .item-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .modal-dialog {
+        max-width: 90%;
+        max-height: 90vh;
+        border: 1px solid black;
+    }
+
+    .item-head {
+        border: 1px solid black;
+    }
+
+    .item-head h4 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .item-body-men {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-gap: 5px;
+        margin-top: 10px;
+        background-color: antiquewhite;
+        /* display: none; */
+    }
+
+    .item-body-women {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-gap: 5px;
+        margin-top: 10px;
+        background-color: antiquewhite;
+        display: none;
+    }
+
+    .item-body-children {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-gap: 5px;
+        margin-top: 10px;
+        background-color: antiquewhite;
+        display: none;
+    }
+
+    .item-body-households {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-gap: 5px;
+        margin-top: 10px;
+        background-color: antiquewhite;
+        display: none;
+    }
+
+    #men {
+        background-color: rgb(124, 124, 124);
+    }
+
+    .box {
+        width: 100%;
+        border: 1px solid black;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        background-color: white;
+    }
+
+
+    .box:hover {
+        box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px;
+        transform: translateY(-2px);
+    }
+
+    .box img {
+        width: 100%;
+    }
+
+    #men,
+    #women,
+    #children,
+    #households {
+        cursor: pointer;
+    }
+
+    #men:hover,
+    #women:hover,
+    #children:hover,
+    #households:hover {
+        box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px;
+        transform: translateY(-2px);
+    }
+
+    .backbtn {
+        top: 0;
+        left: 0;
+    }
+</style>
+
+<body>
+    <div class="super-container">
+        <a class="btn backbtn" href="/listofbills">Back</a>
+        <div class="company-info">
+            <h4>Laundry Room</h4>
+            <p>"NANDAWAT COMPLEX" #7, RMS Bus Stop, Near Bharath Petrol Bunk, Sanjaynage, Bengaluru - 560094</p>
+            <p>+91-99024 70697, +91-90849 04211</p>
+            <!-- <img src="/images/iron-icon-vector-16469515.jpg" alt=""> -->
+        </div>
+        <div class="customer-info">
+            <h2>GL{{billDetails.sno}}</h2>
+            <h6>{{billDetails.date_time.strftime("%d-%a-%y, %I:%M:%S %p")}}</h6>
+            <div class="customer-details">
+                <h6>{{customerDetails.customer_name}} - {{customerDetails.phone_number}}</h6>
+                <h6>{{customerDetails.customer_address}}</h6>
+
+            </div>
+        </div>
+        <div class="totalpayment-info">
+            <div class="current-due">
+                <p>INR: {{billDetails.total_amount}}</p>
+                <p>Current Due</p>
+            </div>
+            <div class="advance">
+                <p>INR: {{billDetails.payed_amount}}</p>
+                <p>Advance</p>
+            </div>
+            <div class="balance-due">
+                <p>INR: {{billDetails.total_amount - billDetails.payed_amount}}</p>
+                <p>Balance Due</p>
+            </div>
+        </div>
+        <div class="products-info">
+            <table>
+                <tr>
+                    <th>Sno</th>
+                    <th>Qty</th>
+                    <th>Preticular's</th>
+                    <th class="amount-align">Amount</th>
+                    <th></th>
+                </tr>
+                {% for item in billItems%}
+                <tr>
+                    <td>1</td>
+                    <td>{{item.quantity}}</td>
+                    <td>
+                        <h5>{{item.perticular}}</h5>
+                    </td>
+                    <td class="amount-align">{{item.amount}}</td>
+                    <td>
+                        {% if billDetails.payed_amount == 0 %}
+                        <form action="/deleteitem" method="post">
+                            <input type="hidden" name="updateBillSno" value="{{billDetails.sno}}" id="">
+                            <input type="hidden" name="deleteItemSno" value="{{item.sno}}">
+                            <button class="btn btn-red" type="submit">Delete</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+
+                {% if billDetails.payed_amount == 0 %}
+                <tr>
+                    <form action="/additems" method="post">
+                        <td>sno</td>
+                        <td><input type="number" name="addItemQyt" placeholder="Enter the Qty:" required></td>
+                        <td><input id="item-name-input" name="addItemPerticular" type="text"
+                                placeholder="Click to select" data-toggle="modal" data-target="#exampleModalLong"
+                                required>
+
+                        <td class="amount-align"><input type="number" name="addItemAmount"
+                                placeholder="Enter the amount" required></td>
+                        <td><input type="hidden" value="{{billDetails.sno}}" name="addItemsBillSno"><button class="btn"
+                                type="submit">Add item</button></td>
+
+                    </form>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+        <div class="terms-conditions">
+            <div>
+                <h4>Terms & Conditions</h4>
+                <p>Original acknowledgement / messages needs to be presented at the time of taking delivery of Garments.
+                </p>
+                <p>We are not Responsible for fastness / running of colors / shrinkage / damage to Embellishments.</p>
+                <p>We will not be responsible if the garment is not collected within 3 months from the date of reving.
+                </p>
+            </div>
+
+            <div class="subtotal-section">
+                <h6>Sub-total : {{billDetails.total_amount}}</h6>
+                <h6>Current Due : {{billDetails.total_amount - billDetails.payed_amount}}</h6>
+                {%if billDetails.total_amount - billDetails.payed_amount > 0 %}
+                <form action="/payamount" method="post">
+                    <label for="currentpayment">Now paying: </label>
+                    <input type="hidden" value="{{billDetails.sno}}" name="payingBillSno">
+                    <input name="currentpayment" type="number" min="0"
+                        max="{{billDetails.total_amount - billDetails.payed_amount}}"
+                        placeholder="Enter current payment" required>
+                    <button type="submit" class="btn">Pay</button>
+                </form>
+                {% elif billDetails.total_amount == 0 %}
+                <p>Please add items</p>
+                {% else %}
+                <p>payment done</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if billDetails.total_amount != 0 %}
+    <form action="/print_pdf" method="post" style="margin-bottom: 30vh;">
+        <input type="hidden" value="{{billDetails.sno}}" name="printBillSno">
+        <button type="submit" class="btn">Print Bill</button>
+    </form>
+    {% endif %}
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="item-head">
+                        <h4 id="men">Men</h4>
+                        <h4 id="women">Women</h4>
+                        <h4 id="children">Children</h4>
+                        <h4 id="households">HouseHold Items</h4>
+                    </div>
+                    <div class="item-body-men">
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/shirt.jpg')}}" alt="">
+                            <h6 class="item-name">shirt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/sweater.jpg')}}" alt="">
+                            <h6 class="item-name">sweater</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/jeans.jpg')}}" alt="">
+                            <h6 class="item-name">jeans</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/gloves.jpg')}}" alt="">
+                            <h6 class="item-name">gloves</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/suit.jpg')}}" alt="">
+                            <h6 class="item-name">suit</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/singlet.jpg')}}" alt="">
+                            <h6 class="item-name">singlet</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/sheos.jpg')}}" alt="">
+                            <h6 class="item-name">shoes</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/cap.jpg')}}" alt="">
+                            <h6 class="item-name">cap</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/shorts.jpg')}}" alt="">
+                            <h6 class="item-name">shorts</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/jackets.jpg')}}" alt="">
+                            <h6 class="item-name">Jacket</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/bow.jpg')}}" alt="">
+                            <h6 class="item-name">Bow tie</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/sleeveless shirts.jpg')}}" alt="">
+                            <h6 class="item-name">sleeveless shirt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/vest.jpg')}}" alt="">
+                            <h6 class="item-name">Vest</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/polo shirt.jpg')}}" alt="">
+                            <h6 class="item-name">polo shirt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/jumper.jpg')}}" alt="">
+                            <h6 class="item-name">jumper</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/trench coat.jpg')}}" alt="">
+                            <h6 class="item-name">trench coat</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/bathrobe.jpg')}}" alt="">
+                            <h6 class="item-name">bathrobe</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/cargo pants.jpg')}}" alt="">
+                            <h6 class="item-name">cargo pants</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/blazzer.jpg')}}" alt="">
+                            <h6 class="item-name">blazer</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/t-shirt.jpg')}}" alt="">
+                            <h6 class="item-name">t-shirt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/belt.jpg')}}" alt="">
+                            <h6 class="item-name">belt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/underpants.jpg')}}" alt="">
+                            <h6 class="item-name">underpants</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/')}}" alt="">
+                            <h6 class="item-name">waistcoat</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/socks.jpg')}}" alt="">
+                            <h6 class="item-name">socks</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/tie.jpg')}}" alt="">
+                            <h6 class="item-name">Tie</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/pullovers.jpg')}}" alt="">
+                            <h6 class="item-name">pullover</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/scarfs.jpg')}}" alt="">
+                            <h6 class="item-name">scarf</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/boots.jpg')}}" alt="">
+                            <h6 class="item-name">boots</h6>
+                        </div>
+
+
+                    </div>
+
+                    <div class="item-body-women">
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/sari.jpg')}}" alt="">
+                            <h6 class="item-name">sari</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women top.jpg')}}" alt="">
+                            <h6 class="item-name">women top</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women jeans.jpg')}}" alt="">
+                            <h6 class="item-name">women jeans</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women innerwear.jpg')}}" alt="">
+                            <h6 class="item-name">women innerwear</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/swim wear.jpg')}}" alt="">
+                            <h6 class="item-name">swim wear</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/bikini.jpg')}}" alt="">
+                            <h6 class="item-name">bikini</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women scarf.jpg')}}" alt="">
+                            <h6 class="item-name">women scarf</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/skirt.jpg')}}" alt="">
+                            <h6 class="item-name">skirt</h6>
+                        </div>
+
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women pullover.jpg')}}" alt="">
+                            <h6 class="item-name">women pullover</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/sleeveless top.jpg')}}" alt="">
+                            <h6 class="item-name">sleeve less top</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women short.jpg')}}" alt="">
+                            <h6 class="item-name">women shorts</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women jeans shorts.jpg')}}" alt="">
+                            <h6 class="item-name">women jeans shorts</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/babydoll dress.jpg')}}" alt="">
+                            <h6 class="item-name">babydoll dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/wrap around dress.jpg')}}" alt="">
+                            <h6 class="item-name">wrap around dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women gloves.jpg')}}" alt="">
+                            <h6 class="item-name">gloves</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kimono dress.jpg')}}" alt="">
+                            <h6 class="item-name">kimono dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/bubble dress.jpg')}}" alt="">
+                            <h6 class="item-name">bubble dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/tutu dress.jpg')}}" alt="">
+                            <h6 class="item-name">tutu dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women cap.jpg')}}" alt="">
+                            <h6 class="item-name">women cap</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/polo dress.jpg')}}" alt="">
+                            <h6 class="item-name">polo dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/women jackets.jpg')}}" alt="">
+                            <h6 class="item-name">women Jacket</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/shirtdress.jpg')}}" alt="">
+                            <h6 class="item-name">shirtdress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/sundress.jpg')}}" alt="">
+                            <h6 class="item-name">sundress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/cullot dress.jpg')}}" alt="">
+                            <h6 class="item-name">culotte dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/sack dress.jpg')}}" alt="">
+                            <h6 class="item-name">sack dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/tunic dress.jpg')}}" alt="">
+                            <h6 class="item-name">tunic dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/sheath dress.jpg')}}" alt="">
+                            <h6 class="item-name">sheath dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/trumpet dress.jpg')}}" alt="">
+                            <h6 class="item-name">trumpet dress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/smoked dress.jpg')}}" alt="">
+                            <h6 class="item-name">smoked / layered dress</h6>
+                        </div>
+
+
+
+
+                    </div>
+
+                    <div class="item-body-children">
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid top.jpg')}}" alt="">
+                            <h6 class="item-name">kid top</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid skirt.jpg')}}" alt="">
+                            <h6 class="item-name">kid skirt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid jeans.jpg')}}" alt="">
+                            <h6 class="item-name">kid jeans</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/girl t-shirt.jpg')}}" alt="">
+                            <h6 class="item-name">girl t-shirt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid sweater.jpg')}}" alt="">
+                            <h6 class="item-name">kid sweater</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid shorts.jpg')}}" alt="">
+                            <h6 class="item-name">kid shorts</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid dangerees.jpg')}}" alt="">
+                            <h6 class="item-name">kid dungaress</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid jacktes.jpg')}}" alt="">
+                            <h6 class="item-name">kid jackets</h6>
+                        </div>
+
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid sweatshirts.jpg')}}" alt="">
+                            <h6 class="item-name">kid sweatshirt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid cord-set.jpg')}}" alt="">
+                            <h6 class="item-name">kid cord-sets</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/boy t-shirt.jpg')}}" alt="">
+                            <h6 class="item-name">boy t-shirt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid shirt.jpg')}}" alt="">
+                            <h6 class="item-name">kid shirt</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid cargo pants.jpg')}}" alt="">
+                            <h6 class="item-name">kid cargo pants</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid under pants.jpg')}}" alt="">
+                            <h6 class="item-name">kid underpants</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/kid kurta pyjama.jpg')}}" alt="">
+                            <h6 class="item-name">kid kurta pyjama</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/bermudas.jpg')}}" alt="">
+                            <h6 class="item-name">kid bermudas</h6>
+                        </div>
+
+
+
+
+
+                    </div>
+
+                    <div class="item-body-households">
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/bathmat.jpg')}}" alt="">
+                            <h6 class="item-name">bathmat</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/pouf.jpg')}}" alt="">
+                            <h6 class="item-name">pouf</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/bed sheets.jpg')}}" alt="">
+                            <h6 class="item-name">bed sheets</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/blanket.jpg')}}" alt="">
+                            <h6 class="item-name">blanket</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/cloth lamp.jpg')}}" alt="">
+                            <h6 class="item-name">cloth lamp</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/comforter.jpg')}}" alt="">
+                            <h6 class="item-name">comforter</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/curtains.jpg')}}" alt="">
+                            <h6 class="item-name">curtains</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/mob.jpg')}}" alt="">
+                            <h6 class="item-name">mob</h6>
+                        </div>
+
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/pillow.jpg')}}" alt="">
+                            <h6 class="item-name">pillow</h6>
+                        </div>
+
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/towels.jpg')}}" alt="">
+                            <h6 class="item-name">towels</h6>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+<script>
+    const options = document.querySelectorAll(".box");
+    const input_bar = document.querySelector("#item-name-input");
+    options.forEach(option => {
+        option.addEventListener("click", () => {
+            let selectedOption = option.querySelector(".item-name").innerText;
+            console.log(selectedOption);
+            input_bar.value = selectedOption;
+        })
+    })
+
+    const men = document.querySelector("#men");
+    const women = document.querySelector("#women");
+    const children = document.querySelector("#children");
+    const households = document.querySelector("#households")
+    const men_items = document.querySelector(".item-body-men");
+    const women_items = document.querySelector(".item-body-women");
+    const children_items = document.querySelector(".item-body-children");
+    const household_items = document.querySelector(".item-body-households")
+
+
+    men.addEventListener("click", () => {
+        men_items.style.display = "grid"
+        women_items.style.display = "none";
+        children_items.style.display = "none";
+        household_items.style.display = "none";
+        men.style.background = "rgb(124, 124, 124)";
+        women.style.background = "white";
+        children.style.background = "white";
+        households.style.background = "white";
+    })
+
+    women.addEventListener("click", () => {
+        women_items.style.display = "grid"
+        men_items.style.display = "none";
+        children_items.style.display = "none";
+        household_items.style.display = "none"
+        women.style.background = "rgb(124, 124, 124)";
+        men.style.background = "white";
+        children.style.background = "white";
+        households.style.background = "white";
+    })
+
+    children.addEventListener("click", () => {
+        children_items.style.display = "grid"
+        men_items.style.display = "none";
+        women_items.style.display = "none";
+        household_items.style.display = "none";
+        children.style.background = "rgb(124, 124, 124)";
+        men.style.background = "white";
+        women.style.background = "white";
+        households.style.background = "white";
+    })
+
+    households.addEventListener("click", () => {
+        household_items.style.display = "grid";
+        children_items.style.display = "none"
+        men_items.style.display = "none";
+        women_items.style.display = "none";
+        households.style.background = "rgb(124, 124, 124)";
+        children.style.background = "white";
+        men.style.background = "white";
+        women.style.background = "white";
+    })
+</script>
+
+<script src="{{url_for('static', filename='scripts/resubmissionPrevention.js')}}"></script>
+
+</html>
