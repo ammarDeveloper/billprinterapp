@@ -210,7 +210,7 @@ def payAmount():
 
         bill = List_of_bills.query.filter_by(sno=payingBillSno).first()
         bill.payed_amount = bill.payed_amount + int(currentPayment)
-        bill.date_time  = datetime.datetime.now(pytz.timezone("Asia/Koltata"))
+        bill.date_time  = datetime.datetime.now()
         db.session.commit()
         return redirect("/billingpage")
     return render_template("page not found.html")
