@@ -10,7 +10,7 @@ accountLoginCredentials = {"loginUserName" : "Mohammed Ammar", "loginUserPasswor
 
 # database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL") # "mysql://root:@localhost/billprinter"
-# postgres://billing_60ux_user:wUy3FUayIr7L2XRrbMzfchw9y0qMPI0k@dpg-cg9cc8ceooghng7dbr4g-a.oregon-postgres.render.com/billing_60ux
+# postgres://billingprinterdb_user:FYewCXPpkmL5rbXjOCh3ImcwPL9phQHI@dpg-cgbutf82qv267uahbl7g-a.oregon-postgres.render.com/billingprinterdb
 db = SQLAlchemy(app)
 
 class All_customers(db.Model):
