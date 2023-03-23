@@ -377,7 +377,6 @@
                                 placeholder="Click to select" data-toggle="modal" data-target="#exampleModalLong"
                                 required>
                                 <select  id="cars" name="service" required>
-                                    <option value="Regular cloths">Regular cloths</option>
                                     <option value="Dry cleaning">Dry cleaning</option>
                                     <option value="Wash and Iron">Wash and Iron</option>
                                     <option value="Iron only">Iron only</option>
@@ -468,13 +467,6 @@
                             <img src="{{url_for('static', filename='/images/')}}" alt="">
                             <h6 class="item-name">Regular</h6>
                         </div>
-
-                        <div data-dismiss="modal" class="box">
-                            <img src="{{url_for('static', filename='/images/')}}" alt="">
-                            <h6 class="item-name">Iron only</h6>
-                        </div>
-
-
 
 
                         <div data-dismiss="modal" class="box">
@@ -862,10 +854,7 @@
                         </div>
 
 
-                        <div data-dismiss="modal" class="box">
-                            <img src="{{url_for('static', filename='/images/')}}" alt="">
-                            <h6 class="item-name">Iron only</h6>
-                        </div>
+                        
 
 
                         <div data-dismiss="modal" class="box">
@@ -1267,6 +1256,10 @@
                     </div>
 
                     <div class="item-body-children">
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/')}}" alt="">
+                            <h6 class="item-name">Regular</h6>
+                        </div>
                         
                         <div data-dismiss="modal" class="box">
                             <img src="{{url_for('static', filename='/images/kid choli.jpg')}}" alt="">
@@ -1437,6 +1430,12 @@
 
                     <div class="item-body-households">
                         <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/')}}" alt="">
+                            <h6 class="item-name">Regular</h6>
+                        </div>
+
+
+                        <div data-dismiss="modal" class="box">
                             <img src="{{url_for('static', filename='/images/Quilt double.jpg')}}" alt="">
                             <h6 class="item-name">Quilt Double</h6>
                         </div>
@@ -1557,6 +1556,11 @@
                     </div>
 
                     <div class="item-body-institutional">
+                        <div data-dismiss="modal" class="box">
+                            <img src="{{url_for('static', filename='/images/')}}" alt="">
+                            <h6 class="item-name">Regular</h6>
+                        </div>
+
                         <div data-dismiss="modal" class="box">
                             <img src="{{url_for('static', filename='/images/bed sheet double.jpg')}}" alt="">
                             <h6 class="item-name">Bed sheet Double</h6>

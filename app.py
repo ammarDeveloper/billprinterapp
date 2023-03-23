@@ -29,7 +29,7 @@ class List_of_bills(db.Model):
     phone_number = db.Column(db.String(225), nullable=False)
     total_amount = db.Column(db.Integer, nullable=False)  
     payed_amount = db.Column(db.Integer, nullable=False)
-    due_dates = db.Column(db.Integer, nullable=True)
+    due_dates = db.Column(db.DateTime, nullable=True)
 
 class List_of_items(db.Model):
     # sno, quantity, perticular, amount, billno
@@ -241,7 +241,7 @@ def addDueDate():
         currentBillDueDate = datetime.datetime.strptime(currentBillDueDate+":00", '%y-%m-%d %H:%M:%S')
         bill = List_of_bills.query.filter_by(sno=dueDateBillSno).first()
         bill.due_dates = currentBillDueDate
-        db.session.commit()
+        # db.session.commit()
         return redirect("/billingpage")
     return render_template("page not found.html")
 
