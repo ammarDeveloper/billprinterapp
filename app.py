@@ -241,7 +241,7 @@ def addDueDate():
         currentBillDueDate = datetime.datetime.strptime(currentBillDueDate+":00", '%y-%m-%d %H:%M:%S')
         bill = List_of_bills.query.filter_by(sno=dueDateBillSno).first()
         bill.due_dates = currentBillDueDate
-        # db.session.commit()
+        db.session.commit()
         return redirect("/billingpage")
     return render_template("page not found.html")
 
