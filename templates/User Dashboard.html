@@ -131,7 +131,7 @@
     <div class="list-of-customers">
         {% for bill in listOfBills %}
         <div class="customer">
-            <h5>Bill No: GL{{bill.sno}}</h5>
+            <h5>Bill No: BN{{bill.sno}}</h5>
             <h5>{{bill.date_time}}</h5>
             <div class="encloser">
                 {% if bill.total_amount == 0 %}

@@ -9,8 +9,9 @@ app = Flask(__name__)
 # account login credentials
 accountLoginCredentials = {"loginUserName" : "Laundry Room", "loginUserPassword" : "LaundryRoom@123", "alreadyLoggedIn" : False, "currentUserBills":"", "currentBillNo": ""}
 
+
 # database configuration
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL") # "mysql://root:@localhost/billprinter"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL") #"mysql://root:@localhost/billprinter"
 # postgres://billingprinterdb_user:FYewCXPpkmL5rbXjOCh3ImcwPL9phQHI@dpg-cgbutf82qv267uahbl7g-a.oregon-postgres.render.com/billingprinterdb
 db = SQLAlchemy(app)
 
@@ -28,6 +29,7 @@ class List_of_bills(db.Model):
     phone_number = db.Column(db.String(225), nullable=False)
     total_amount = db.Column(db.Integer, nullable=False)  
     payed_amount = db.Column(db.Integer, nullable=False)
+    due_dates = db.Column(db.Integer, nullable=True)
 
 class List_of_items(db.Model):
     # sno, quantity, perticular, amount, billno
@@ -37,6 +39,13 @@ class List_of_items(db.Model):
     amount = db.Column(db.Integer, nullable=False)
     billno = db.Column(db.Integer, nullable=False)
 
+# counting the items
+def lenth(billItems):
+    count = 0
+    for bill in billItems:
+        count += bill.quantity
+    
+    return count
 
 # login and logout
 @app.route("/login", methods=["GET", "POST"])
@@ -145,7 +154,8 @@ def createbill():
         accountLoginCredentials["currentBillNo"] = billNo
         bill = List_of_bills.query.filter_by(sno=billNo).first()
         billItems = List_of_items.query.filter_by(billno=billNo).all()
-        return render_template("billing page.html", customerDetails=customer, billDetails=bill, billItems=billItems)
+        count = lenth(billItems)
+        return render_template("billing page.html", customerDetails=customer, billDetails=bill, billItems=billItems, count=count)
     return redirect("/billingpage")
 
 
@@ -159,7 +169,9 @@ def openBill():
         customerNumber = bill.phone_number
         customer = All_customers.query.filter_by(phone_number=customerNumber).first()
         billItems = List_of_items.query.filter_by(billno=openBillSno).all()
-        return render_template("billing page.html", customerDetails=customer, billDetails=bill, billItems=billItems)
+        print(accountLoginCredentials["currentBillNo"])
+        count = lenth(billItems)
+        return render_template("billing page.html", customerDetails=customer, billDetails=bill, billItems=billItems, count=count)
     return redirect("/billingpage")
 
 # add items in bill
@@ -170,19 +182,22 @@ def addItems():
         addItemPerticular = request.form.get("addItemPerticular")
         addItemAmount = request.form.get('addItemAmount')
         addItemsBillSno = request.form.get("addItemsBillSno")
+        addService = request.form.get("service")
+        print(addService)
         # sno, quantity, perticular, amount, billno
-        entry = List_of_items(quantity=addItemQyt, perticular=addItemPerticular, amount=addItemAmount, billno=addItemsBillSno)
+        entry = List_of_items(quantity=addItemQyt, perticular=(addItemPerticular + " -("+addService+")"), amount=addItemAmount, billno=addItemsBillSno)
         db.session.add(entry)
         db.session.commit()
 
         bill = List_of_bills.query.filter_by(sno=addItemsBillSno).first()
         # print(type(addItemAmount), type(bill.total_amount))
-        bill.total_amount = bill.total_amount + int(addItemAmount)
+        bill.total_amount = bill.total_amount + (int(addItemAmount)*int(addItemQyt))
         db.session.commit()
         customerNumber = bill.phone_number
         customer = All_customers.query.filter_by(phone_number=customerNumber).first()
         billItems = List_of_items.query.filter_by(billno=addItemsBillSno).all()
-        return render_template("billing page.html", customerDetails=customer, billDetails=bill, billItems=billItems)
+        count = lenth(billItems)
+        return render_template("billing page.html", customerDetails=customer, billDetails=bill, billItems=billItems, count=count)
     return redirect("/billingpage")
 
 # delete items form the bill
@@ -192,11 +207,12 @@ def deleteItems():
         deleteItemSno = request.form.get("deleteItemSno")
         updateBillSno = request.form.get("updateBillSno")
         item = List_of_items.query.filter_by(sno=deleteItemSno).first()
+        itemQuantity = item.quantity
         db.session.delete(item)
         db.session.commit()
         bill = List_of_bills.query.filter_by(sno=updateBillSno).first()
         print(updateBillSno, bill)
-        bill.total_amount = bill.total_amount - int(item.amount)
+        bill.total_amount = bill.total_amount - (int(item.amount)*itemQuantity)
         db.session.commit()
         return redirect("/billingpage")
     return render_template("page not found.html")
@@ -214,6 +230,21 @@ def payAmount():
         db.session.commit()
         return redirect("/billingpage")
     return render_template("page not found.html")
+
+# adding due dates
+@app.route("/addduedate", methods={"GET", "POST"})
+def addDueDate():
+    if request.method == "POST":
+        dueDateBillSno = request.form.get("duedatebillsno")
+        currentBillDueDate = request.form.get("currentbillduedate").replace("T", " ")[2:]
+        print(currentBillDueDate)
+        currentBillDueDate = datetime.datetime.strptime(currentBillDueDate+":00", '%y-%m-%d %H:%M:%S')
+        bill = List_of_bills.query.filter_by(sno=dueDateBillSno).first()
+        bill.due_dates = currentBillDueDate
+        db.session.commit()
+        return redirect("/billingpage")
+    return render_template("page not found.html")
+
 
 
 
@@ -248,7 +279,9 @@ def billingPage():
         customerNumber = bill.phone_number
         customer = All_customers.query.filter_by(phone_number=customerNumber).first()
         billItems = List_of_items.query.filter_by(billno=accountLoginCredentials["currentBillNo"]).all()
-        return render_template("billing page.html", customerDetails=customer, billDetails=bill, billItems=billItems)
+        print(accountLoginCredentials["currentBillNo"])
+        count = lenth(billItems)
+        return render_template("billing page.html", customerDetails=customer, billDetails=bill, billItems=billItems, count=count)
     return redirect("/listofbills")
 
 # printing bill
@@ -260,7 +293,8 @@ def print_pdf():
         customerNumber = bill.phone_number
         customer = All_customers.query.filter_by(phone_number=customerNumber).first()
         billItems = List_of_items.query.filter_by(billno=accountLoginCredentials["currentBillNo"]).all()
-        rendered = render_template("bill.html",  customerDetails=customer, billDetails=bill, billItems=billItems)
+        count = lenth(billItems)
+        rendered = render_template("bill.html",  customerDetails=customer, billDetails=bill, billItems=billItems, count=count)
         pdf = pdfkit.from_string(rendered, False)
 
         response = make_response(pdf)
@@ -268,6 +302,7 @@ def print_pdf():
         response.headers['Content-Disposition'] = 'inline; filename=recipt.pdf'
         return response
     return render_template("page not found.html")
+
 
 
 

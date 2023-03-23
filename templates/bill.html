@@ -270,6 +270,19 @@
         border-style: none;
         padding: 10px;
     }
+
+    .mid-seccion{
+        border-bottom: 1px solid black;
+        /* padding: 0px 10px; */
+    }
+
+    .mid-seccion table{
+        padding: 0px 10px;
+    }
+
+    .mid-seccion table td{
+        border: none;
+    }
 </style>
 
 <body>
@@ -287,10 +300,10 @@
             <table class="table-border">
                 <tr>
                     <td>
-                        <h2>GL{{billDetails.sno}}</h2>
+                        <h2>BN{{billDetails.sno}}</h2>
                     </td>
                     <td>
-                        <h6>{{billDetails.date_time.strftime("%d-%a-%y, %I:%M:%S %p")}}</h6>
+                        <h6>Billing Date: {{billDetails.date_time.strftime("%d-%m-%y, %I:%M:%S %p")}}</h6>
                     </td>
                     <td>
                         <div class="customer-details">
@@ -344,6 +357,21 @@
                 <p>Balance Due</p>
             </div> -->
         </div>
+        <div class="mid-seccion">
+            <table>
+                <tr>
+                    <td><h6>Total Pcs: {{count}}</h6></td>
+                    <td><p>Adance Balance: 0</p></td>
+                    <td class="amount-align">
+                    {% if billDetails.due_dates != None %}
+                        <p style="margin-top: 5px;">Due Date:  {{billDetails.due_dates.strftime("%d-%m-%y, %I:%M:%S %p")}}</p>
+                    {% else %}
+                        <p style="margin-top: 5px;">Due Date:  No Due Date</p>
+                    {% endif %}</td>
+                </tr>
+                
+            </table>
+        </div>
         <div class="products-info">
             <table>
                 <tr>
@@ -358,9 +386,9 @@
                     <td>1</td>
                     <td>{{item.quantity}}</td>
                     <td>
-                        <h5>{{item.perticular}}</h5>
+                        <h5>{{item.perticular}} @Rs.{{item.amount}}</h5>
                     </td>
-                    <td class="amount-align">{{item.amount}}</td>
+                    <td class="amount-align">{{item.amount*item.quantity}}</td>
                 </tr>
                 {% endfor %}
             </table>
