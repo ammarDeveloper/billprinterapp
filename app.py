@@ -12,7 +12,7 @@ accountLoginCredentials = {"loginUserName" : "Laundry Room", "loginUserPassword"
 
 # database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL") # "mysql://root:@localhost/billprinter"
-# postgres://billingprinterdatabase2_user:IWhT5sxbv130yYJvNNNpKL9ufOS1fnHj@dpg-cia0p5h8g3n2q3u99o50-a.oregon-postgres.render.com/billingprinterdatabase2
+# postgres://billingprinterdb2_user:KgHmqJiFg9R74apMam7vgY6KW8JsrxvQ@dpg-ck5ha1v9056s738qf1q0-a.oregon-postgres.render.com/billingprinterdb2
 db = SQLAlchemy(app)
 
 class All_customers(db.Model):
